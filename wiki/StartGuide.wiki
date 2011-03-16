@@ -8,7 +8,7 @@ Les opérations d’interrogation, de mise à jour, de création et de suppressi
 
 Des exemples de JEDI sont disponibles sous formes de tests JUnit.
 
-=== JediServer ===
+=== jediServer ===
 
 La classe JediServer permet de se connecter à une base LDAP et renvoie toutes les informations nécessaires sur la connexion. Cette classe permet aussi d’effectuer toutes les opérations de déplacement, de renommage, de création, de suppression et d’interrogation sur les entrées de la base.
 
