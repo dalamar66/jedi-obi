@@ -8,7 +8,7 @@ Les opérations d’interrogation, de mise à jour, de création et de suppressi
 
 Des exemples de JEDI sont disponibles sous formes de tests JUnit.
 
-=== jediServer ===
+=== JediServer ===
 
 La classe JediServer permet de se connecter à une base LDAP et renvoie toutes les informations nécessaires sur la connexion. Cette classe permet aussi d’effectuer toutes les opérations de déplacement, de renommage, de création, de suppression et d’interrogation sur les entrées de la base.
 
@@ -52,6 +52,7 @@ Lors de l’exécution d’une requête les paramètres possibles sont les suiva
 
 Seul l’alias est obligatoire. 
 
+{{{
 //Création du JediFilter
 JediFilter jediFilter = new JediFilter();
 jediFilter.setAlias("global");
@@ -59,5 +60,6 @@ jediFilter.setPath("");
 jediFilter.setFilter("(&(objectCategory=Person)(objectClass=user)(sn=Humeau))");
 jediFilter.setAttributesList(defaultAttributes);
 jediFilter.setSubtree(true);
+}}}
 
 Cet exemple montre comment rechercher une personne dans la base dont le nom est "humeau". La recherche s’effectue à partir de la racine et dans tous les sous arbres, la liste des attributs chargés étant ceux par défaut.
