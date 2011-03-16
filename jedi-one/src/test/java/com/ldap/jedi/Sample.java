@@ -16,10 +16,10 @@ public class Sample extends Assert {
 
 	JediServer server = null;
 
-	private static final String ldap_domain = "ldap://insitu.ad.exane.com:389/";
-	private static final String ldap_racine = "dc=insitu,dc=ad,dc=exane,dc=com";
-	private static final String ldap_user = "cn=svc-ceweb,ou=services,ou=accounts,dc=insitu,dc=ad,dc=exane,dc=com";
-	private static final String ldap_pwd = "k43AbfK";
+	private static final String ldap_domain = "ldap://xxx:389/";
+	private static final String ldap_racine = "dc=xxx";
+	private static final String ldap_user = "cn=xxx,ou=xxx,dc=xxx";
+	private static final String ldap_pwd = "xxx";
 	private static final String ldap_connectionName = "authentification";
 
 	@Before
