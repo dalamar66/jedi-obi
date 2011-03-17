@@ -5,7 +5,11 @@
 
 ===*DSML Part*==
 
- * Générer le jar incluant la gestion DSML
  * Gérer le différentiel de fichiers DSML
  * Doc explicative DSML
  * Upload de sample utilisation DSML
+
+===*Global*==
+
+ * Regénérer la javadoc
+ * Générer le jar incluant la gestion DSML
