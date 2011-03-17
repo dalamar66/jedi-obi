@@ -66,7 +66,6 @@ public class Sample extends Assert {
 		assertEquals(list.size(), 1);
 	}
 
-	@Ignore
 	@Test
 	public void checkUserConnection() throws ObiServiceException {
 		assertNotNull(one);
@@ -80,6 +79,7 @@ public class Sample extends Assert {
 		assertEquals(test, true);
 	}
 	
+	@Ignore
 	@Test
 	public void test() throws JediException, ObiServiceException, ObiConnectionException, ObiDataException {
 		ObiUserService userService = one.getUserService();

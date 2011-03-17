@@ -1,9 +1,7 @@
 package com.ldap.jedi;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -57,32 +55,6 @@ public class Sample extends Assert {
 		jediFilter.setPageSize(900);
 
 		List<JediObject> list = server.findByFilter(jediFilter);
-		
-		int counter = 0;
-		Set<String> set = new HashSet<String>();
-		
-		for (JediObject object : list) {
-			JediPath path = object.getJediPartialDNWihoutRac();
-			
-			List<String> listPath = path.getVarPath();
-			
-			JediAttributeList jal = object.getJediAttributeList();
-			
-			for (String papath : listPath) {
-				if (papath.toLowerCase().startsWith("ou=")) {
-					set.add(papath);
-				}
-			}
-			
-			if (object.getPartialDNWihoutRac().toLowerCase().indexOf("ou=analyse") != -1) {
-				System.out.println(object.getPartialDNWihoutRac() + ";" + jal.get("sn") + ";" + jal.get("givenName"));
-				counter++;
-			}
-			else if (object.getPartialDNWihoutRac().toLowerCase().indexOf("ou=rech_derives") != -1) {
-				System.out.println(object.getPartialDNWihoutRac() + ";" + jal.get("sn") + ";" + jal.get("givenName"));
-				counter++;
-			}
-		}
 
 		assertNotNull(list);
 		assertEquals(1, list.size());
