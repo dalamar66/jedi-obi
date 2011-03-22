@@ -35,6 +35,19 @@ import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class DsmlAdapter {
 
+    private static List<String> attributeToIgnoreForDiff = new ArrayList<String>();
+
+    static {
+        attributeToIgnoreForDiff.add("uSNCreated");
+        attributeToIgnoreForDiff.add("uSNChanged");
+        attributeToIgnoreForDiff.add("objectGUID");
+        attributeToIgnoreForDiff.add("whenCreated");
+        attributeToIgnoreForDiff.add("objectCategory");
+        attributeToIgnoreForDiff.add("schemaIDGUID");
+        attributeToIgnoreForDiff.add("distinguishedName");
+        attributeToIgnoreForDiff.add("whenChanged");
+    }
+
     /**
      * Methode permettant de contruire le document dsml a partir de la liste d'objet passé en parametre
      * 
@@ -273,7 +286,7 @@ public class DsmlAdapter {
      * @param fileName Chemin du fichier XML qui sera généré.
      * @throws DsmlAdapterException
      */
-    public static void serializeDocument(Document document, String fileName) throws DsmlAdapterException {
+    private static void serializeDocument(Document document, String fileName) throws DsmlAdapterException {
         JediLog.log(JediLog.LOG_TECHNICAL, JediLog.INFO, "", "", null);
         JediLog.log(JediLog.LOG_FUNCTIONAL, JediLog.INFO, "", "", null);
 
@@ -570,5 +583,251 @@ public class DsmlAdapter {
             throw new DsmlAdapterException("DsmlAdapter : load (String) : Erreur interne");
         }
     }
+
+    /**
+     * Méthode qui fait le différentiel entre deux Documents et qui renvoie sous
+     * forme de Document les différences.
+     *
+     * @param documentReference Premier Document à comparer.
+     * @param documentToCompare Second Document à comparer.
+     * @param mode Mode de comparaison : entry / attr / all.
+     * @param resultFile Fichier resultat.
+     * @throws DsmlAdapterException
+     */
+    public static void diff(Document documentReference, Document documentToCompare, String mode, String resultFile) throws DsmlAdapterException {
+        NodeList nodeListEntryReference = null;
+        NodeList nodeListEntryToCompare = null;
+    	Document document = null;
+
+        boolean attributeCompare = false;
+        boolean dnCompare = false;
+
+    	//*************************************************************
+        // Vérification de la validité des paramètres
+    	//*************************************************************
+        if (documentReference == null || documentToCompare == null || mode == null || mode.length() == 0) {
+            throw new DsmlAdapterException("DsmlAdapter : diff (Document, Document, boolean, boolean) : L'un des paramètres au moins est null ou les 2 booléens sont à false");
+        }
+
+        if (mode.equalsIgnoreCase("entry")) {
+            attributeCompare = false;
+            dnCompare        = true;
+        } else if (mode.equalsIgnoreCase("attr")) {
+            attributeCompare = true;
+            dnCompare        = false;
+        } else if (mode.equalsIgnoreCase("all")) {
+            attributeCompare = true;
+            dnCompare        = true;
+        } else {
+            throw new DsmlAdapterException("DsmlAdapter : diff (Document, Document, boolean, boolean) : entry / attr / all");
+        }
+
+        try {
+            nodeListEntryReference = XPathAPI.selectNodeList(documentReference,"/dsml/directory-entries/entry");
+            nodeListEntryToCompare = XPathAPI.selectNodeList(documentToCompare,"/dsml/directory-entries/entry");
+        } catch (Exception e) {
+            throw new DsmlAdapterException("DsmlAdapter : diff (Document, Document, boolean, boolean)");
+        }
+
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            document = builder.newDocument();
+        } catch (Exception ex) {
+            throw new DsmlAdapterException("DsmlAdapter : diff (Document, Document, boolean, boolean) : Erreur lors de la construcion du document ");
+        }
+
+    	//*************************************************************
+        // Construction de l'entrée <dsml>
+    	//*************************************************************
+        Element elementDsml = document.createElement("dsml");
+        document.appendChild(elementDsml);
+
+    	//*************************************************************
+        // Construction de l'entrée <directory-entries>
+    	//*************************************************************
+        Element elementDirectoryEntries = document.createElement("directory-entries");
+        elementDsml.appendChild(elementDirectoryEntries);
+
+    	//*************************************************************
+        // On récupère les entrées et on regarde si l'entrée existe
+        // dans le second Document
+    	//*************************************************************
+        for (int i = 0; i < nodeListEntryReference.getLength(); i++) {
+        	//-------------------------------------------------------------
+        	// Comparaison sur les dn car c'est toujours le cas quelque
+        	// soit le mode choisi
+        	//-------------------------------------------------------------
+        	Node nodeReference = nodeListEntryReference.item(i);
+            String dnReference = nodeReference.getAttributes().item(0).getNodeValue();
+
+            Node nodeToCompare = null;
+            String dnToCompare = null;
+            boolean exist = false;
+
+            for (int j = 0; j < nodeListEntryToCompare.getLength(); j++) {
+                nodeToCompare = nodeListEntryToCompare.item(j);
+                dnToCompare = nodeToCompare.getAttributes().item(0).getNodeValue();
+
+                if (dnToCompare.equalsIgnoreCase(dnReference)) {
+                    JediLog.log(JediLog.LOG_TECHNICAL,JediLog.INFO,"Mise en correspondance de : ", dnToCompare, null);
+                    JediLog.log(JediLog.LOG_FUNCTIONAL,JediLog.INFO,"Mise en correspondance de : ", dnToCompare, null);
+
+                    exist = true;
+                    break;
+                }
+            }
+
+        	//-------------------------------------------------------------
+            // Si l'entrée existe il faut regarder s'il y a des différences
+            // au niveau des noeuds fils
+        	//-------------------------------------------------------------
+            if (exist == true && attributeCompare == true) {
+	        	//-------------------------------------------------------------
+	            // Si il existe des différences au niveau des noeuds fils alors
+	            // il faut créer l'objet dans la nouvelle DOM
+	        	//-------------------------------------------------------------
+	            if (compareAttr(nodeReference, nodeToCompare) == false) {
+	                Node nodeDiff = document.importNode(nodeReference, true);
+	                elementDirectoryEntries.appendChild(nodeDiff);
+
+	                JediLog.log(JediLog.LOG_TECHNICAL,JediLog.INFO,"Difference d'attributs : ", dnToCompare, null);
+	                JediLog.log(JediLog.LOG_FUNCTIONAL,JediLog.INFO,"Difference d'attributs : ", dnToCompare, null);
+	            }
+            }
+        	//-------------------------------------------------------------
+            // Si l'entrée n'existe pas alors il faut la créer
+        	//-------------------------------------------------------------
+            else {
+                if (exist == false && dnCompare == true) {
+                	Node nodeDiff = document.importNode(nodeReference, true);
+                    elementDirectoryEntries.appendChild(nodeDiff);
+
+                    JediLog.log(JediLog.LOG_TECHNICAL,JediLog.INFO,"Création de l'entrée : ", dnReference, null);
+                    JediLog.log(JediLog.LOG_FUNCTIONAL,JediLog.INFO,"Création de l'entrée : ", dnReference, null);
+                }
+            }
+        }// Fin du for
+
+        serializeDocument(document, resultFile);
+    }
+
+    /**
+     * Méthode qui compare les attributs des 2 noeuds et qui dit s'il y a des differences.
+     * Les attributs exclus de la comparaison  sont ceux de la liste attributeToIgnoreForDiff
+     *
+     * @param node1 Premier noeud à comparer.
+     * @param node2 Second noeud à comparer.
+     * @return True si les noeuds sont identiques, false sinon.
+     * @throws DsmlAdapterException
+     */
+    private static boolean compareAttr (Node node1, Node node2) throws DsmlAdapterException {
+        String nameNodeTemp1   = null;
+        String nameNodeTemp2   = null;
+        Node nodeTemp1     = null;
+        Node nodeTemp2     = null;
+
+    	//*************************************************************
+        // Vérification de la validité des paramètres
+    	//*************************************************************
+        if (node1 == null || node2 == null) {
+            throw new DsmlAdapterException("DsmlAdapter : compareAttr (Node, Node) : L'un des paramètres au moins est null");
+        }
+
+    	//*************************************************************
+        // Si les noeuds ont un nombre différent de fils alors ils sont
+        // différents
+    	//*************************************************************
+        NodeList nodeList1 = node1.getChildNodes();
+        NodeList nodeList2 = node2.getChildNodes();
+
+        if (nodeList1.getLength() != nodeList2.getLength()) {
+            return false;
+        }
+
+    	//*************************************************************
+        // Pour chaque fils du noeud on va regarder ses valeurs
+    	//*************************************************************
+        for (int i = 0; i < nodeList1.getLength(); i++) {
+        	//-------------------------------------------------------------
+            // Récupération du fils du noeud
+        	//-------------------------------------------------------------
+            nodeTemp1 = nodeList1.item(i);
+
+        	//-------------------------------------------------------------
+            // On récupère son nom. Si on le trouve pas alors il s'agit de
+            // l'attribut objectClass
+        	//-------------------------------------------------------------
+            try {
+                nameNodeTemp1 = nodeTemp1.getAttributes().item(0).getNodeValue();
+                if (attributeToIgnoreForDiff.contains(nameNodeTemp1)) {
+                    continue;
+                }
+            } catch (Exception ex) {
+                nameNodeTemp1 = "objectClass";
+            }
+
+        	//-------------------------------------------------------------
+            // Parcours du second Document à la recherche d'un fils portant
+            // le meme nom
+        	//-------------------------------------------------------------
+            boolean foundAttr = false;
+            for (int j = 0; j < nodeList2.getLength(); j++) {
+                try {
+                	nodeTemp2 = nodeList2.item(j);
+                    nameNodeTemp2 = nodeTemp2.getAttributes().item(0).getNodeValue();
+                } catch (Exception ex) {
+                    nameNodeTemp2 = "objectClass";
+                }
+
+                // Si on trouve l'attribut alors on le signale et on sort
+                if (nameNodeTemp1.equalsIgnoreCase(nameNodeTemp2)) {
+                    foundAttr = true;
+                    break;
+                }
+            }
+
+        	//-------------------------------------------------------------
+            // Si on n'a pas trouvé l'attribut dans le noeud 2 alors il
+            // y a des différences
+        	//-------------------------------------------------------------
+            if (foundAttr == false) {
+                JediLog.log(JediLog.LOG_TECHNICAL,JediLog.INFO,"Attribut non trouvé : ", nameNodeTemp2, null);
+
+                return false;
+            }
+
+        	//-------------------------------------------------------------
+            // On a trouvé l'attribut, et on compare maintenant les valeurs
+        	//-------------------------------------------------------------
+            NodeList nodeListTemp1 = nodeTemp1.getChildNodes();
+            NodeList nodeListTemp2 = nodeTemp2.getChildNodes();
+
+            List<String> nodeValueList2 = new ArrayList<String>();
+            for (int k = 0; k < nodeListTemp2.getLength(); k++) {
+            	nodeValueList2.add(nodeListTemp2.item(k).getChildNodes().item(0).getNodeValue());
+            }
+
+            // Pour chaque valeur du noeud du premier document on regarde si 
+            // elle fait partie des valeurs du noeud du second  document
+            boolean isDifferent = false;
+            for (int m = 0; m < nodeListTemp1.getLength(); m++) {
+                if (nodeValueList2.contains(nodeListTemp1.item(m).getChildNodes().item(0).getNodeValue()) == false) {
+                    isDifferent = true;
+                }
+            }
+
+        	//-------------------------------------------------------------
+            // Si les valeurs d'attributs sont différentes
+        	//-------------------------------------------------------------
+            if (isDifferent == true) {
+                JediLog.log(JediLog.LOG_TECHNICAL,JediLog.INFO,"Difference de valeurs pour l'attribut : ", nameNodeTemp2, null);
+
+                return false;
+            }
+        }// Fin du for
+
+        return true;
+    }// Fin de la méthode
 
 }//Fin de la classe
