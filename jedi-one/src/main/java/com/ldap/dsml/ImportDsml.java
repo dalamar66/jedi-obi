@@ -56,8 +56,7 @@ public class ImportDsml {
             JediLog.log(JediLog.LOG_FUNCTIONAL, JediLog.INFO, "", "", className);
 
             DsmlAdapter.setDocument(document, obiOne.getServer(), obiOne.getDirectoryAlias());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("ERREUR LORS DE L'EXECUTION");
         }
     }
