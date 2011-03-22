@@ -6,7 +6,7 @@
 ===*DSML Part*==
 
  * Approfondir les tests
- * Gérer le différentiel de fichiers DSML
+ * ~~Gérer le différentiel de fichiers DSML~~
  * Doc explicative DSML
  * Upload de sample utilisation DSML
 
