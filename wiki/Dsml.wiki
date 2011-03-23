@@ -1,7 +1,20 @@
 =*DSML*=
 
-Le package Dsml permet de faire des sauvegardes, restauration et differntiel de la bases active directory.
+De nos jours, les services d’annuaire et XML constituent les fondements d’une bonne gestion des données. Avec DSML (Directory Service Markup Language), langage standardisé semblable au XML pour représenter les informations hiérarchiques, les services d’annuaires peuvent bénéficier des avantages du XML. En effet les services d’annuaires permettent de stocker et gérer les données tandis que XML permet de présenter et d’échanger les données. Ainsi le DSML permet aux services d’annuaires d’être plus dynamiques en intégrant du XML.
 
+Un document DSML peut décrire les entrées d’une structure hiérarchique (comme les bases LDAP), ou la structure hiérarchique elle-même, ou les deux à la fois.
+La balise racine est <DSML> et ses enfants peuvent être <DIRECTORY-ENTRIES> si c’est la représentation des entrées de la base, ou <DIRECTORY-SCHEMA> si c’est la représentation du schéma de la base LDAP.
+
+{{{
+<DSML>
+<DIRECTORY-SCHEMA>
+…
+</DIRECTORY-SCHEMA>
+<DIRECTORY-ENTRIES >
+…
+</DIRECTORY-ENTRIES>
+</DSML>
+}}}
 ===Fichier de configuration===
 
 {{{
