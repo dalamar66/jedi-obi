@@ -60,8 +60,8 @@ echo Usage : diff [chemin / fichier xml] [chemin / fichier xml] [entry/attr/all]
 echo.
 echo [chemin / fichier xml] : Fichier XML de référence
 echo [chemin / fichier xml] : Fichier XML à comparer
-echo [entry]           	    : Les nouveaux elements entry du modele sont extraits
-echo [attr]                 : Elements sous entry sont traites
+echo [entry]           	    : Les nouveaux elements du modele sont extraits
+echo [attr]                 : Seul les attributs sont traites
 echo [all]		    : Les deux cas precedents sont appliqués
 echo [chemin / fichier xml] : Fichier XML notifiant les différences
 echo.
