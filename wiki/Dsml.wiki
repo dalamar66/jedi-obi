@@ -70,8 +70,7 @@ Pour ce qui est du schéma de la base LDAP, la syntaxe DSML est la suivante :
 Pour la description du schéma il faut distinguer les objets des attributs.
 Les objets du schéma LDAP sont délimités par les balises `<CLASS>` et `</CLASS>`, et les attributs du schéma LDAP par les balises `<ATTRIBUE-TYPE>` et `</ATTRIBUE-TYPE>`
 
- * Pour les objets du schéma il faut renseigner la valeur de chaque attribut de l’objet LDAP en les encadrant entre des balises spécifiant le nom de l’attribut, par exemple : `<NAME>`Nom de test`</NAME>`.
-De plus, par définition, les objets du schéma peuvent avoir une liste d’attributs pointés. On les précise de la façon suivante : 
+ * Pour les objets du schéma il faut renseigner la valeur de chaque attribut de l’objet LDAP en les encadrant entre des balises spécifiant le nom de l’attribut, par exemple : `<NAME>`Nom de test`</NAME>`. De plus, par définition, les objets du schéma peuvent avoir une liste d’attributs pointés. On les précise de la façon suivante : 
 (Exemple)    `<ATTRIBUTE REF="#sn" REQUIRED="true" />`, ce qui signifie que l’attribut sn est un des attributs pointés par l’objet de la base et que celui-ci est obligatoire. 
  
  * Pour les attributs du schéma il faut renseigner la valeur de chaque attribut de l’objet LDAP en les encadrant entre des balises spécifiant le nom de l’attribut, par exemple : `<NAME>`Nom de test`</NAME>`.
