@@ -1,4 +1,9 @@
-Dsml
+=*DSML*=
+
+Le package Dsml permet de faire des sauvegardes, restauration et differntiel de la bases active directory.
+
+===Fichier de configuration===
+
 {{{
 com.byconst.ref.dsml.directoryserver   = ldap://256.256.256.256
 com.byconst.ref.dsml.directoryserver   = ldap://societe.domaine.com
@@ -10,4 +15,6 @@ com.byconst.ref.dsml.directoryrootpath = OU=Comptes,DC=societe,DC=domaine,DC=com
 com.byconst.ref.dsml.directoryuser     = cn=Administrateur,cn=Users,DC=societe,DC=domaine,DC=com
 
 com.byconst.ref.dsml.filter            = (&(ou=mar*))
+
+com.ldap.dsml.attributerequired        = cn,sn
 }}}
