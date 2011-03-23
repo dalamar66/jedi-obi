@@ -18,3 +18,18 @@ com.byconst.ref.dsml.filter            = (&(ou=mar*))
 
 com.ldap.dsml.attributerequired        = cn,sn
 }}}
+
+===Export===
+
+{{{
+PATH = %PATH%;c:\jdk1.5\bin
+
+@echo off
+echo.
+echo Usage : export [chemin / fichier de properties] [chemin / fichier xml]
+echo.
+echo [chemin / fichier de properties] : Fichier de configuration
+echo [chemin / fichier xml]           : Fichier de destination
+echo.
+java.exe -Xms512m -Xmx512m -classpath jedi-obi.jar com.ldap.dsml.ExportDsml %1 %2
+}}}
