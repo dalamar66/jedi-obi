@@ -16,7 +16,7 @@ com.byconst.ref.dsml.directoryuser     = cn=Administrateur,cn=Users,DC=societe,D
 
 com.byconst.ref.dsml.filter            = (&(ou=mar*))
 
-com.ldap.dsml.attributerequired        = cn,sn
+com.ldap.dsml.attributerequired        = cn,sn,givenName
 }}}
 
 ===Export===
