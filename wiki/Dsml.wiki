@@ -9,4 +9,4 @@ com.byconst.ref.dsml.directoryrootpath = OU=Comptes,DC=societe,DC=domaine,DC=com
 
 com.byconst.ref.dsml.directoryuser     = cn=Administrateur,cn=Users,DC=societe,DC=domaine,DC=com
 
-com.byconst.ref.dsml.filter            = (&(ou=t*))
+com.byconst.ref.dsml.filter            = (&(ou=t\*))
