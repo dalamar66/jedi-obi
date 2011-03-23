@@ -37,6 +37,58 @@ Les nœuds `<DIRECTORY-ENTRIES>` peuvent contenir les informations de la classe 
 </DSML>
 }}}
 
+
+
+
+
+
+
+
+-----------------------------------------
+Les enfants directs de <DIRECTORY-ENTRIES> sont les <ENTRY> avec pour attribut de balise « DN » qui est le distinguishdName de l’entrée et qui identifie parfaitement l’entrée traitée.
+Pour chaque <ENTRY> il n’existe que 2 types d’enfants possibles : <OBJECTCLASS> ou <ATTR>.
+•	<OBJECTCLASS> définit l’attribut LDAP objectClass et chaque valeur LDAP de cet attribut est entre les balises <OC-VALUE> et </OC-VALUE>.
+•	<ATTR> définit les autres attributs LDAP et chaque valeur LDAP de ces attributs est entre les balises <VALUE> et </VALUE>. Contrairement à la balise <OBJECTCLASS> il faut donner le nom de l’attribut LDAP en renseignant l’attribut de balise « NAME ».
+Pour les valeurs d’attributs LDAP binaires il faut le préciser dans le fichier DSML. On renseigne donc l’attribut de balise « encoding » avec pour valeur base64 au niveau de la balise <VALUE>.
+
+
+
+2.	<DIRECTORY-SCHEMA>
+Pour ce qui est du schéma de la base LDAP, la syntaxe DSML est la suivante :
+
+<DSML>
+<CLASS ID= « person » SUPERIOR= « #top » TYPE= «structural »>
+<NAME>person</NAME>
+<DESCRIPTION>…</DESCRIPTION>
+<ATTRIBUTE REF= « #sn » REQUIRED= « true » />
+<ATTRIBUTE REF= « #cn » REQUIRED= « true » />
+<ATTRIBUTE REF= « #seeAlso » REQUIRED= « false » />
+</CLASS>
+<ATTRIBUTE-TYPE ID= « cn »>
+	<NAME>cn</NAME>
+	<DESCRIPTION>…</DESCRIPTION>
+	…
+</ATTRIBUTE-TYPE>
+</DSML>
+
+Pour la description du schéma il faut distinguer les objets des attributs.
+Les objets du schéma LDAP sont délimités par les balises <CLASS> et </CLASS>, et les attributs du schéma LDAP par les balises <ATTRIBUE-TYPE> et </ATTRIBUE-TYPE>
+
+•	Pour les objets du schéma il faut renseigner la valeur de chaque attribut de l’objet LDAP en les encadrant entre des balises spécifiant le nom de l’attribut, par exemple : <NAME>Nom de test</NAME>.
+De plus, par définition, les objets du schéma peuvent avoir une liste d’attributs pointés. On les précise de la façon suivante : 
+(Exemple)    <ATTRIBUTE REF= « #sn » REQUIRED= « true » />, ce qui signifie que l’attribut sn est un des attributs pointés par l’objet de la base et que celui-ci est obligatoire. 
+ 
+•	Pour les attributs du schéma il faut renseigner la valeur de chaque attribut de l’objet LDAP en les encadrant entre des balises spécifiant le nom de l’attribut, par exemple : <NAME>Nom de test</NAME>.
+----------------------------------------
+
+
+
+
+
+
+
+
+
 ===Fichier de configuration===
 
 {{{
