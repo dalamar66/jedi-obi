@@ -590,7 +590,7 @@ public class DsmlAdapter {
 
     /**
      * Méthode qui fait le différentiel entre deux Documents et qui renvoie sous
-     * forme de Document les différences.
+     * forme de fichier les différences.
      *
      * @param documentReference Premier Document à comparer.
      * @param documentToCompare Second Document à comparer.
