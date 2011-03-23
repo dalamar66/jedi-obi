@@ -50,7 +50,7 @@ public class Sample extends Assert {
 		jediFilter.setPath("");
 		jediFilter.setSubtree(true);
 		jediFilter.setPageSize(900);
-		jediFilter.setFilter("(|(sAMAccountName=humeau_x))");
+		jediFilter.setFilter("(&(sAMAccountName=humeau_x)(objectCategory=Person))");
 
 		List<JediObject> jediObjectList = one.getServer().findByFilter(jediFilter);
 		DsmlAdapter.getDocument(jediObjectList, "c:\\exportResult.xml");
