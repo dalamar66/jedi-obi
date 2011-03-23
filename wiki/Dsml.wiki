@@ -48,3 +48,22 @@ echo [chemin / fichier xml]           : Fichier source
 echo.
 java.exe -Xms512m -Xmx512m -classpath jedi-obi.jar com.ldap.dsml.ImportDsml %1 %2
 }}}
+
+===Differentiel===
+
+{{{
+PATH = %PATH%;c:\jdk1.5\bin
+
+@echo off
+echo.
+echo Usage : diff [chemin / fichier xml] [chemin / fichier xml] [entry/attr/all] [chemin / fichier xml]
+echo.
+echo [chemin / fichier xml] : Fichier XML de référence
+echo [chemin / fichier xml] : Fichier XML à comparer
+echo [entry]           	    : Les nouveaux elements entry du modele sont extraits
+echo [attr]                 : Elements sous entry sont traites
+echo [all]		    : Les deux cas precedents sont appliqués
+echo [chemin / fichier xml] : Fichier XML notifiant les différences
+echo.
+java.exe -Xms512m -Xmx512m -classpath jedi-obi.jar com.ldap.dsml.DiffDsml %1 %2 %3 %4
+}}}
