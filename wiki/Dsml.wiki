@@ -21,21 +21,20 @@ Les nœuds `<DIRECTORY-ENTRIES>` peuvent contenir les informations de la classe 
 {{{
 <DSML>
 <DIRECTORY-ENTRIES>
-    <ENTRY DN= « OU=HUMEAU Xavier, DC=Personnes, DC=societe, DC=com »>
-<OBJECTCLASS>
-<OC-VALUE>top</OC-VALUE>
-<OC-VALUE>organizationalUnit</OC-VALUE>
-</OBJECTCLASS>
-<ATTR  NAME= « otherMail » >
-<VALUE>xhumeau@gmail.com</VALUE>
-</ATTR>
-<ATTR NAME= « OID » >
-	<VALUE ENCODING= “base64”>MIICJ+6K…<VALUE>
-</ATTR>
-    </ENTRY>
+   <ENTRY DN="OU=HUMEAU Xavier, DC=Personnes, DC=societe, DC=com">
+      <OBJECTCLASS>
+         <OC-VALUE>top</OC-VALUE>
+         <OC-VALUE>organizationalUnit</OC-VALUE>
+      </OBJECTCLASS>
+      <ATTR NAME="otherMail">
+         <VALUE>xhumeau@gmail.com</VALUE>
+      </ATTR>
+      <ATTR NAME="OID">
+         <VALUE ENCODING="base64">MIICJ+6K…<VALUE>
+      </ATTR>
+   </ENTRY>
 </DIRECTORY-ENTRIES>
 </DSML>
-
 }}}
 
 ===Fichier de configuration===
