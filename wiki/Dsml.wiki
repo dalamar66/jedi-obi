@@ -1,0 +1,12 @@
+Dsml
+
+com.byconst.ref.dsml.directoryserver   = ldap://256.256.256.256
+com.byconst.ref.dsml.directoryserver   = ldap://societe.domaine.com
+
+com.byconst.ref.dsml.directorypassword = xxx
+
+com.byconst.ref.dsml.directoryrootpath = OU=Comptes,DC=societe,DC=domaine,DC=com
+
+com.byconst.ref.dsml.directoryuser     = cn=Administrateur,cn=Users,DC=societe,DC=domaine,DC=com
+
+com.byconst.ref.dsml.filter            = (&(ou=t*))
