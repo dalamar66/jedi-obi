@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.w3c.dom.Document;
 
 import com.ldap.jedi.JediConnectionException;
 import com.ldap.jedi.JediException;
@@ -40,20 +41,19 @@ public class Sample extends Assert {
 		one.closeConnections();
 	}
 
-	@Ignore
 	@Test
 	public void getDocument() throws JediException, JediConnectionException, DsmlAdapterException {
 		assertNotNull(one);
-		
+
 		JediFilter jediFilter = new JediFilter();
 		jediFilter.setAlias(one.getDirectoryAlias());
-		jediFilter.setPath("cn=schema,cn=configuration");
+		jediFilter.setPath("");
 		jediFilter.setSubtree(true);
 		jediFilter.setPageSize(900);
-		jediFilter.setFilter("(|(cn=BCC-*)(cn=BCA-*))");
+		jediFilter.setFilter("(|(sAMAccountName=humeau_x))");
 
 		List<JediObject> jediObjectList = one.getServer().findByFilter(jediFilter);
-		DsmlAdapter.getDocument(jediObjectList, "c:\\export.xml");
+		DsmlAdapter.getDocument(jediObjectList, "c:\\exportResult.xml");
 	}
 	
 	@Ignore
@@ -63,11 +63,14 @@ public class Sample extends Assert {
 
 	}
 
-	@Ignore
 	@Test
-	public void diff() {
+	public void diff() throws DsmlAdapterException {
 		assertNotNull(one);
 
+		Document documentReference = DsmlAdapter.load("c:\\exportReference.xml");
+		Document documentToCompare = DsmlAdapter.load("c:\\exportToCompare.xml");
+
+		DsmlAdapter.diff(documentReference, documentToCompare, DsmlAdapter.MODE_ATTR, "c:\\diffResult.xml");
 	}
 	
 }

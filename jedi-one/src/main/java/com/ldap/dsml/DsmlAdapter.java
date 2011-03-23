@@ -35,6 +35,10 @@ import com.sun.org.apache.xpath.internal.XPathAPI;
 
 public class DsmlAdapter {
 
+    public static final String MODE_ENTRY = "entry";
+    public static final String MODE_ATTR = "attr";
+    public static final String MODE_ALL = "all";
+	
     private static List<String> attributeToIgnoreForDiff = new ArrayList<String>();
 
     static {
@@ -609,13 +613,13 @@ public class DsmlAdapter {
             throw new DsmlAdapterException("DsmlAdapter : diff (Document, Document, boolean, boolean) : L'un des paramètres au moins est null ou les 2 booléens sont à false");
         }
 
-        if (mode.equalsIgnoreCase("entry")) {
+        if (mode.equalsIgnoreCase(MODE_ENTRY)) {
             attributeCompare = false;
             dnCompare        = true;
-        } else if (mode.equalsIgnoreCase("attr")) {
+        } else if (mode.equalsIgnoreCase(MODE_ATTR)) {
             attributeCompare = true;
             dnCompare        = false;
-        } else if (mode.equalsIgnoreCase("all")) {
+        } else if (mode.equalsIgnoreCase(MODE_ALL)) {
             attributeCompare = true;
             dnCompare        = true;
         } else {
@@ -781,7 +785,7 @@ public class DsmlAdapter {
                 }
 
                 // Si on trouve l'attribut alors on le signale et on sort
-                if (nameNodeTemp1.equalsIgnoreCase(nameNodeTemp2)) {
+                if (nameNodeTemp1.equalsIgnoreCase(nameNodeTemp2) && nodeTemp1.getClass().equals(nodeTemp2.getClass())) {
                     foundAttr = true;
                     break;
                 }
@@ -804,17 +808,23 @@ public class DsmlAdapter {
             NodeList nodeListTemp2 = nodeTemp2.getChildNodes();
 
             List<String> nodeValueList2 = new ArrayList<String>();
-            for (int k = 0; k < nodeListTemp2.getLength(); k++) {
-            	nodeValueList2.add(nodeListTemp2.item(k).getChildNodes().item(0).getNodeValue());
+            for (int j = 0; j < nodeListTemp2.getLength(); j++) {
+            	NodeList temp = nodeListTemp2.item(j).getChildNodes();
+            	if (temp != null && temp.item(0) != null) {
+                	nodeValueList2.add(temp.item(0).getNodeValue());
+            	}
             }
 
             // Pour chaque valeur du noeud du premier document on regarde si 
             // elle fait partie des valeurs du noeud du second  document
             boolean isDifferent = false;
-            for (int m = 0; m < nodeListTemp1.getLength(); m++) {
-                if (nodeValueList2.contains(nodeListTemp1.item(m).getChildNodes().item(0).getNodeValue()) == false) {
-                    isDifferent = true;
-                }
+            for (int j = 0; j < nodeListTemp1.getLength(); j++) {
+            	NodeList temp = nodeListTemp1.item(j).getChildNodes();
+            	if (temp != null && temp.item(0) != null) {
+                    if (nodeValueList2.contains(temp.item(0).getNodeValue()) == false) {
+                        isDifferent = true;
+                    }
+            	}
             }
 
         	//-------------------------------------------------------------
