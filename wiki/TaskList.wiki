@@ -1,17 +1,17 @@
-===*Obi Part*==
+=2.2.0 release=
+
+===*Obi Part*===
+
+ * Implémenter les services institutions
+ * Commentaires sur le sample Obi
+
+===*Jedi Part*===
+
+ * Revue complète du code
+ * Commentaires sur le sample Jedi
+
+=2.3.0 release=
+
+===*Obi Part*===
 
  * Implémenter les services groupes
- * Implémenter les services institutions
-
-===*DSML Part*==
-
- * ~~Approfondir les tests~~
- * ~~Gérer le différentiel de fichiers DSML~~
- * ~~Doc explicative DSML~~
- * ~~Upload de sample utilisation DSML~~
- * ~~Upload de sample utilisation DSML sous forme de bat~~
-
-===*Global*==
-
- * ~~Regénérer la javadoc~~
- * ~~Générer le jar incluant la gestion DSML~~
