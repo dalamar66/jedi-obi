@@ -71,7 +71,7 @@ public class JediAttributeList {
 	 * 
 	 * @return La liste des attributs.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public NamingEnumeration getAll() {
 		return attributes.getAll();
 	}
@@ -189,11 +189,7 @@ public class JediAttributeList {
     	} else {
         	JediAttribute jediAttribute = new JediAttribute(attTemp);
         	
-        	if (jediAttribute != null) {
-    	    	return jediAttribute.getValue();
-        	} else {
-    	    	return null;
-        	}
+        	return jediAttribute.getValue();
     	}
 	}
 	

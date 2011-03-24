@@ -535,7 +535,6 @@ public abstract class ObiData {
 	 * @throws OBIDataException
 	 *             Si attributeName est null ou vide, ou s'il n'est pas valide.
 	 */
-	@SuppressWarnings("unchecked")
 	public List<String> getValues(String attributeName) throws ObiDataException {
 		// Verification de la validite des parametres de la methode
 		if (attributeName == null || attributeName.length() == 0) {
@@ -548,6 +547,7 @@ public abstract class ObiData {
 			List<String> result = new ArrayList<String>();
 
 			// Si l'attribut existe dans la liste alors on charge ses valeurs dans la NamingEnumeration
+			@SuppressWarnings("rawtypes")
 			NamingEnumeration naming = dataList.get(attributeName).getAll();
 
 			// Si on a recupere une Naming il faut la transformer pour retoiurner un vecteur

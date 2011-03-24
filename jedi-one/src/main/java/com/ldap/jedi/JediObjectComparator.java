@@ -14,7 +14,6 @@ public class JediObjectComparator implements Comparator<JediObject> {
 		this.property = property;
 	}
 
-	@Override
 	public int compare(JediObject o1, JediObject o2) {
 		int comparaison = -1;
 		String sn1 = null;
