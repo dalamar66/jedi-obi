@@ -55,13 +55,6 @@ public class JediAttribute extends BasicAttribute {
 	public JediAttribute(Attribute attribute) throws JediException {
 		super(attribute.getID(), attribute.isOrdered());
 
-		// Verification de la validité des paramètres
-		if (attribute == null) {
-			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "jedi_msg_parameter_error", "", this);
-
-			throw new JediException("JediAttribute : JediAttribute(attribute) : Paramètre d'initialisation incorrect");
-		}
-
 		try {
 			// Sur toute la taille de l'attribut on ajoute les valeurs de celui-ci
 			for (int i = 0; i < attribute.size(); i++) {
@@ -237,7 +230,7 @@ public class JediAttribute extends BasicAttribute {
 	 * @throws JediException
 	 *             Si l'attribut est null.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public List<Object> getMultiValue() throws JediException {
 		ArrayList<Object> arrayAttribute = new ArrayList<Object>();
 

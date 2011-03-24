@@ -113,7 +113,8 @@ public class ObiOne {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings("rawtypes")
 	private List<String> getListDse() {
 		List<String> listDse = new ArrayList<String>();
 

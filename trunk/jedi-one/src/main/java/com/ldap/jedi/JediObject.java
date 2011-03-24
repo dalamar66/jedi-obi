@@ -442,7 +442,7 @@ public class JediObject {
 			// Si le JediObject a une liste d'attributs
 			else {
 				// On recupere dans une NamingEnum la liste des attributs
-				NamingEnumeration namingEnumeration = jediAttributeList.getAll();
+				NamingEnumeration<JediAttribute> namingEnumeration = jediAttributeList.getAll();
 				// Pour chaque attribut on le met a jour dans la liste des attributs du JediObject
 				while (namingEnumeration.hasMore()) {
 					this.jediAttributeList.put((JediAttribute) namingEnumeration.next());
