@@ -7,9 +7,9 @@
 
  * ~~Approfondir les tests~~
  * ~~Gérer le différentiel de fichiers DSML~~
- * Doc explicative DSML
+ * ~~Doc explicative DSML~~
  * ~~Upload de sample utilisation DSML~~
- * Upload de sample utilisation DSML sous forme de bat
+ * ~~Upload de sample utilisation DSML sous forme de bat~~
 
 ===*Global*==
 
