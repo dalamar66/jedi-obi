@@ -2,7 +2,7 @@
 
 ===*Obi Part*===
 
- * Implémenter les services institutions
+ * Implémenter les services organizationalUnit
  * Commentaires sur le sample Obi
 
 ===*Jedi Part*===
