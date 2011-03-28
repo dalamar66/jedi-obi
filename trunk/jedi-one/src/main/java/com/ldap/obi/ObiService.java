@@ -10,25 +10,20 @@ import com.ldap.jedi.JediFilter;
 import com.ldap.jedi.JediLog;
 import com.ldap.jedi.JediObject;
 import com.ldap.jedi.JediPath;
-import com.ldap.obi.personne.ObiPersonneData;
 
 /**
  * File : ObiService.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-10 
- * Modification date : 2010-04-23
+ * Modification date : 2011-03-28
  */
 
 public abstract class ObiService<T extends ObiData> {
 
 	protected ObiOne one;
-
 	protected List<String> defaultAttributes = null;
-
 	protected String ldapClassName = null;
-	
 	protected String ldapCategory = null;
-
 	protected List<String> ldapFullClassName = null;
 
 	/**
@@ -49,12 +44,6 @@ public abstract class ObiService<T extends ObiData> {
 
 		this.one = one;
 	}
-
-	protected abstract T newObiData(JediAttributeList jediAttributeList) throws ObiDataException;
-
-	protected abstract T newObiData(JediObject jediObject) throws ObiDataException;
-
-	protected abstract boolean isRdnModified(String DN, ObiData myData);
 
 	/**
 	 * Methode qui retourne le tableau des attributs a charger par defaut.
@@ -178,7 +167,7 @@ public abstract class ObiService<T extends ObiData> {
 	 *             Si les paramètres sont invalides, si il y a une erreur sur le rappatriement de l'objet, si il y a une erreur sur le remplacement des
 	 *             attributs, ou si il y a un echec du controle.
 	 */
-	private void setData(String dnWithRac, ObiData myData) throws ObiInvalidDnException, ObiServiceException, ObiConnectionException {
+	public void setData(String dnWithRac, ObiData myData) throws ObiInvalidDnException, ObiServiceException, ObiConnectionException {
 		// Verification de la validite des parametres de la methode
 		if (dnWithRac == null || dnWithRac.length() == 0 || myData == null || isRdnModified(dnWithRac, myData)) {
 			List<String> paramList = new ArrayList<String>();
@@ -396,32 +385,6 @@ public abstract class ObiService<T extends ObiData> {
 	}// Fin de la méthode
 
 	/**
-	 * Mise à jour dans l'annuaire d'un OBIPersonData à partir d'un DN.
-	 * Doit appeller OBIService.setData.
-	 * 
-	 * @param DN
-	 *            distinguishedName de l'objet à mettre à jour.
-	 * @param data
-	 *            objet à mettre à jour.
-	 * @throws ObiServiceException
-	 * @throws ObiConnectionException
-	 * @throws ObiInvalidDnException
-	 */
-	protected void update(String dn, ObiPersonneData data) throws ObiServiceException, ObiInvalidDnException, ObiConnectionException {
-		// Verification de la validite des parametres de la methode
-		if (dn == null || dn.length() == 0 || data == null) {
-			List<String> paramList = new ArrayList<String>();
-			paramList.add(dn);
-
-			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "obi_msg_parameter_error", paramList, this);
-
-			throw new ObiServiceException("OBIService : setData(String, OBIPersonData) : Paramètres incorrects");
-		}
-
-		setData(dn, data);
-	}
-
-	/**
 	 * Methode permettant de construire le filtre
 	 * 
 	 * @param filter
@@ -482,5 +445,145 @@ public abstract class ObiService<T extends ObiData> {
 			throw new ObiConnectionException("OBIService : findByFilter(String, OBIPersonData) : Paramètres incorrects");
 		}
 	}
+
+	protected boolean isRdnModified(String dn, ObiData myData) throws ObiServiceException {
+		// Verification de la validite des parametres de la methode
+		if (dn == null || myData == null) {
+			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "obi_msg_parameter_error", "", this);
+
+			throw new ObiServiceException("OBIService : isRdnModified(String, ObiData) : Paramètres incorrects");
+		}
+
+		try {
+			// Recuperation du rdn correspondant au dn
+			JediPath pathDn = new JediPath(dn);
+			String rdn = pathDn.getRDN();
+
+			// Recuperation du rdn correspondant au data et comparaison
+			String dnData = myData.getValue(ObiConstants.ATTRIBUTE_DISTINGUISHED_NAME);
+			if (dnData != null && dnData.equals("") == false) {
+				JediPath pathDnData = new JediPath(dnData);
+				String rdnData = pathDnData.getRDN();
+				
+				if (rdnData.equalsIgnoreCase(rdn)) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			throw new ObiServiceException("OBIService : findByFilter(String, OBIPersonData) : Paramètres incorrects");
+		}
+
+		return false;
+	}
+
+	/**
+	 * Récupération d'un OBIData depuis l'annuaire à partir d'un DN. <BR>
+	 * <BR>
+	 * Doit appeller OBIService.getData.
+	 * 
+	 * @param DN
+	 *            distinguishedName COMPLET de l'objet à récupérer.
+	 * @param requiredAttributes
+	 *            liste d'attributs à charger.
+	 * @return un OBIData.
+	 * @throws ObiOneException
+	 * @throws ObiInvalidDnException
+	 * @throws ObiServiceException
+	 * @throws ObiConnectionException
+	 */
+	protected T get(String dn, List<String> requiredAttributes) throws ObiConnectionException, ObiServiceException, ObiInvalidDnException, ObiOneException {
+		// Verification de la validite des parametres de la methode
+		if (dn == null || dn.length() == 0 || requiredAttributes == null || requiredAttributes.size() == 0) {
+			List<String> paramList = new ArrayList<String>();
+			paramList.add(dn);
+
+			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "obi_msg_parameter_error", paramList, this);
+
+			throw new ObiServiceException("OBIService : get(String, String[]) : Paramètres incorrects");
+		}
+
+		// Construction de la liste d'attribut à l'aide du DN et des attributs requis
+		return getData(dn, requiredAttributes);
+	}// Fin de la methode
+
+	/**
+	 * Récupération d'un OBIData depuis l'annuaire à partir d'un DN. La liste des attributs chargés est celle par defaut. <BR>
+	 * <BR>
+	 * Doit appeller OBIService.getData.
+	 * 
+	 * @param DN
+	 *            distinguishedName COMPLET de l'objet à récupérer.
+	 * @return un OBIData.
+	 * @throws ObiOneException
+	 * @throws ObiInvalidDnException
+	 * @throws ObiServiceException
+	 * @throws ObiConnectionException
+	 */
+	protected T get(String dn) throws ObiConnectionException, ObiServiceException, ObiInvalidDnException, ObiOneException {
+		return get(dn, defaultAttributes);
+	}
 	
+	/**
+	 * Methode permettant de recuperer la liste des ObiData correspondant au filtrage sur l'attribut.
+	 * 
+	 * @param attributeName
+	 * @param value
+	 * @return
+	 * @throws ObiServiceException
+	 * @throws ObiConnectionException
+	 */
+	protected List<T> findByFilter(String attributeName, String value) throws ObiServiceException, ObiConnectionException {
+		JediFilter jediFilter = new JediFilter();
+		jediFilter.setAlias(one.getDirectoryAlias());
+		jediFilter.setPath("");
+		jediFilter.setFilter("(&(objectCategory=" + ldapCategory + ")(objectClass=" +  ldapClassName + ")(" + attributeName + "=" + value + "))");
+		jediFilter.setAttributesList(defaultAttributes);
+		jediFilter.setPageSize(900);
+		jediFilter.setSubtree(true);
+
+		List<JediObject> jediObjectList;
+		try {
+			jediObjectList = one.getServer().findByFilter(jediFilter);
+		} catch (JediException e) {
+			throw new ObiServiceException();
+		} catch (JediConnectionException e) {
+			throw new ObiConnectionException();
+		}
+		
+		List<T> result = new ArrayList<T>();
+
+		try {
+			if (jediObjectList != null) {
+				for (JediObject jediObject : jediObjectList) {
+					result.add(newObiData(jediObject));
+				}
+			}
+		} catch (ObiDataException e) {
+			throw new ObiServiceException();
+		}
+		
+		return result;
+	}
+
+	/**
+	 * Methode permettant de recuperer la liste des ObiData correspondant au service.
+	 * 
+	 * @return
+	 * @throws ObiServiceException
+	 * @throws ObiConnectionException
+	 */
+	protected List<T> getAll() throws ObiServiceException, ObiConnectionException {
+		return findByFilter("objectCategory", ldapCategory);
+	}	
+
+	// *****************************************************************************************************
+	//
+	// METHODES ABSTRAITES A DEFINIR DANS LES CLASSES FILLES
+	//
+	// *****************************************************************************************************
+	
+	protected abstract T newObiData(JediAttributeList jediAttributeList) throws ObiDataException;
+
+	protected abstract T newObiData(JediObject jediObject) throws ObiDataException;
+
 }

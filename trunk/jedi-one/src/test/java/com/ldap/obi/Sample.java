@@ -47,7 +47,7 @@ public class Sample extends Assert {
 		ObiPersonneService personneService = one.getPersonService();
 
 		// Recuperation des data de personne
-		ObiPersonneData personneData = personneService.getPersonData(ldap_user);
+		ObiPersonneData personneData = personneService.get(ldap_user);
 
 		personneData.dataSize();
 	}
@@ -56,12 +56,12 @@ public class Sample extends Assert {
 	@Test
 	public void findUserData() throws ObiServiceException, ObiConnectionException, ObiInvalidDnException, ObiOneException {
 		assertNotNull(one);
-
+		
 		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
 
 		//Recherche du compte de humeau_x
-		List<ObiUserData> list = userService.findUserByFilter("sAMAccountName", "humeau_x");
+		List<ObiUserData> list = userService.findByFilter("sAMAccountName", "humeau_x");
 
 		assertEquals(list.size(), 1);
 	}
@@ -74,7 +74,7 @@ public class Sample extends Assert {
 		ObiUserService userService = one.getUserService();
 
 		//Test des parametres d'authentification
-		boolean test = userService.checkUserAuthentification("humeau_x", "Village");
+		boolean test = userService.checkAuthentification("humeau_x", "Village");
 
 		assertEquals(test, true);
 	}
