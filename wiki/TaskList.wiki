@@ -4,10 +4,11 @@
 
  * ~~Implémenter les services organizationalUnit~~
  * ~~Commentaires sur le sample Obi~~
+ * Refactoring du nom des méthodes
 
 ===*Jedi Part*===
 
- * Revue complète du code
+ * ~~Revue complète du code~~
  * ~~Commentaires sur le sample Jedi~~
 
 =2.3.0 release=
