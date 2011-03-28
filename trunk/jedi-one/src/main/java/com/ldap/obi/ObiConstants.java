@@ -9,6 +9,8 @@ package com.ldap.obi;
 
 public interface ObiConstants {
 
+	static final String CLASS_NAME_TOP = "top";
+
 	static final String ATTRIBUTE_DISTINGUISHED_NAME = "distinguishedName";
 
 }

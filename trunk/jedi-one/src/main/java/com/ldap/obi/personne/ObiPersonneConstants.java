@@ -12,9 +12,8 @@ public interface ObiPersonneConstants extends ObiConstants{
 
 	static final String CATEGORY_USER = "Person";
 
-	static final String CLASS_NAME_PERSON = "person";
-	static final String CLASS_NAME_TOP = "top";
 	static final String CLASS_NAME_USER = "user";
+	static final String CLASS_NAME_PERSON = "person";
 
 	static final String ATTRIBUTE_EMPLOYEEID = "employeeID";
 	static final String ATTRIBUTE_SN = "sn";

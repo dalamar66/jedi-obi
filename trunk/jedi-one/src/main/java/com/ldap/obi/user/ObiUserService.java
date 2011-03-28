@@ -33,6 +33,8 @@ public class ObiUserService extends ObiService<ObiUserData> {
 
 		ldapFullClassName = new ArrayList<String>();
 		ldapFullClassName.add(ObiUserConstants.CLASS_NAME_TOP);
+		ldapFullClassName.add(ObiUserConstants.CLASS_NAME_PERSON);
+		ldapFullClassName.add(ObiUserConstants.CLASS_NAME_ORGANIZATIONAL_PERSON);
 		ldapFullClassName.add(ldapClassName);
 
 		defaultAttributes = new ArrayList<String>();
