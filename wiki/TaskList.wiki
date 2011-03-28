@@ -4,7 +4,7 @@
 
  * ~~Implémenter les services organizationalUnit~~
  * ~~Commentaires sur le sample Obi~~
- * Refactoring du nom des méthodes
+ * Refactoring ~~du nom des méthodes~~ et de l'architecture
 
 ===*Jedi Part*===
 
