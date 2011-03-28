@@ -9,7 +9,6 @@
 
 ===*Jedi Part*===
 
- * ~~Revue complète du code~~
  * ~~Commentaires sur le sample Jedi~~
 
 =2.3.0 release=
