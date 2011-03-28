@@ -12,7 +12,7 @@ import com.ldap.obi.ObiServiceException;
 /**
  * File : ObiPersonneService.java 
  * Component : Version : 1.0 
- * Creation date : 2010-03-10 
+ * Creation date : 2011-03-10 
  * Modification date : 2011-03-28
  */
 
