@@ -204,7 +204,7 @@ public class JediAttribute extends BasicAttribute {
 	 *             Si l'attribut est null ou si il est multi-valué, ou si la valeur n'est pas retournable sous forme de String.
 	 */
 	// TODO : getMultiValue ne suffit il pas pour recuperer les datas. Si c'est le cas
-	// alors il faut renommer getMultiValue en gatValue et supprimer cette methode
+	// alors il faut renommer getMultiValue en getValue et supprimer cette methode
 	public Object getValue() throws JediException {
 		// Si l'attribut n'est pas null et qu'il est multi-valué alors on renvoie une erreur
 		if (size() > 1) {

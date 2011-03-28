@@ -23,6 +23,8 @@ public class Sample extends Assert {
 	@Before
 	public void setup() throws JediException {
 		server = new JediServer();
+
+		// Creation de la connection
 		server.addConnectionParameters(ldap_connectionName, ldap_domain, new JediPath(ldap_racine), new JediPath(ldap_user), ldap_pwd);
 	}
 	
@@ -30,6 +32,7 @@ public class Sample extends Assert {
 	public void cleanup() throws JediException, JediConnectionException {
 		assertNotNull(server);
 
+		// Fermeture de la connection
 		server.closeConnection();
 	}
 
@@ -37,23 +40,23 @@ public class Sample extends Assert {
 	public void basicSearch() throws JediException, JediConnectionException {
 		assertNotNull(server);
 
-		String ldap_baseSearch = "";
-		String requestSearchUser = "(&(&(objectClass=user)(!(objectClass=computer)))(sAMAccountName=*))";
-
+		// Liste des attributs que l'on veut recuperer
 		List<String> attList = new ArrayList<String>();
 		attList.add("sn");
 		attList.add("givenName");
 		attList.add("name");
 		attList.add("sAMAccountName");
 		
+	    // Creation du filtre
 		JediFilter jediFilter = new JediFilter();
-		jediFilter.setAlias(ldap_connectionName);
-		jediFilter.setPath(ldap_baseSearch);
-		jediFilter.setAttributesList(attList);
-		jediFilter.setFilter(requestSearchUser);
-		jediFilter.setSubtree(true);
-		jediFilter.setPageSize(900);
+		jediFilter.setAlias(ldap_connectionName);//Definition de la connection
+		jediFilter.setPath("");//Definition du chemin à ajouter au ldap_racine a partir duquel sera fait la recherche
+		jediFilter.setAttributesList(attList);//Affectation de la liste des attributs a rappatriés
+		jediFilter.setFilter("(&(&(objectClass=user)(!(objectClass=computer)))(sAMAccountName=*))");//Criteres de filtre
+		jediFilter.setSubtree(true);//La recherche doit se faire dans tous les descendants
+		jediFilter.setPageSize(900);//Definition de la pagination de la recherche
 
+		// Application du filtre
 		List<JediObject> list = server.findByFilter(jediFilter);
 
 		assertNotNull(list);
@@ -66,21 +69,22 @@ public class Sample extends Assert {
 		assertNotNull(server);
 
 		JediFilter jediFilter = new JediFilter();
-		jediFilter.setAlias(ldap_connectionName);
-		jediFilter.setPath("ou=Paris");
-		jediFilter.setAttributesList(null);
-		jediFilter.setFilter("(objectClass=user)");
-		jediFilter.setSubtree(true);
+		jediFilter.setAlias(ldap_connectionName);//Definition de la connection
+		jediFilter.setPath("ou=Paris");//Definition du chemin à ajouter au ldap_racine a partir duquel sera fait la recherche
+		jediFilter.setAttributesList(null);//Affectation de la liste des attributs a rappatriés : Tous
+		jediFilter.setFilter("(objectClass=user)");//Criteres de filtre
+		jediFilter.setSubtree(true);//La recherche doit se faire dans tous les descendants
 
-		jediFilter.setApproximation("humo_x");
-		jediFilter.setIndice(80);
-		jediFilter.setAttribute("sAMAccountName");
-		jediFilter.setMetric(JediFilterConstants.METRIC_JARO);
+		jediFilter.setApproximation("humo_x");//Valeur a approximer
+		jediFilter.setIndice(80);//Indice de rapprochement
+		jediFilter.setAttribute("sAMAccountName");//Attribut a approximer
+		jediFilter.setMetric(JediFilterConstants.METRIC_JARO);//Methode d'approximation
 		
-		jediFilter.setPageSize(900);
-		jediFilter.setLimitation(100);
-		jediFilter.setSorted(new JediObjectComparator(JediObjectComparator.DN));
+		jediFilter.setPageSize(900);//Definition de la pagination de la recherche
+		jediFilter.setLimitation(100);//Limitation des resultats au 100 premiers
+		jediFilter.setSorted(new JediObjectComparator(JediObjectComparator.DN));//Definition du critere de tri
 
+		// Application du filtre
 		List<JediObject> list = server.findByFilter(jediFilter);
 
 		assertNotNull(list);
@@ -92,70 +96,37 @@ public class Sample extends Assert {
 		assertNotNull(server);
 
 		JediFilter jediFilter = new JediFilter();
-		jediFilter.setAlias(ldap_connectionName);
-		jediFilter.setPath("");
-		jediFilter.setAttributesList(new ArrayList<String>());
-		jediFilter.setFilter("(&(objectClass=user)(sAMAccountName=humeau_x))");
-		jediFilter.setSubtree(true);
+		jediFilter.setAlias(ldap_connectionName);//Definition de la connection
+		jediFilter.setPath("");//Definition du chemin à ajouter au ldap_racine a partir duquel sera fait la recherche
+		jediFilter.setAttributesList(new ArrayList<String>());//Affectation de la liste des attributs a rappatriés : Aucun
+		jediFilter.setFilter("(&(objectClass=user)(sAMAccountName=humeau_x))");//Criteres de filtre
+		jediFilter.setSubtree(true);//La recherche doit se faire dans tous les descendants
 
+		// Application du filtre
 		List<JediObject> list = server.findByFilter(jediFilter);
 		
+		//Recuperation des differentes valeurs de path
 		if (list != null && list.isEmpty() == false) {
 			if (list.size() == 1) {
 				JediObject jediObject = list.get(0);
-				
-				jediObject.getCompleteDN();
-				jediObject.getPartialDN();
-				jediObject.getPartialDNWihoutRac();
-				jediObject.getCompleteNode();
-				jediObject.getPartialNode();
-				jediObject.getPartialNodeWihoutRac();
 
-				jediObject.getRDN();
-				
-				jediObject.getJediCompleteDN();
-				jediObject.getJediPartialDNWihoutRac();
-				jediObject.getJediCompleteNode();
-				jediObject.getJediPartialNodeWihoutRac();
+				System.out.println("getCompleteDN : " + jediObject.getCompleteDN());
+				System.out.println("getPartialDN : " + jediObject.getPartialDN());
+				System.out.println("getPartialDNWihoutRac : " + jediObject.getPartialDNWihoutRac());
+				System.out.println("getCompleteNode : " + jediObject.getCompleteNode());
+				System.out.println("getPartialNode : " + jediObject.getPartialNode());
+				System.out.println("getPartialNodeWihoutRac : " + jediObject.getPartialNodeWihoutRac());
 
-				jediObject.getJediRDN();
+				System.out.println("getRDN : " + jediObject.getRDN());
+
+				System.out.println("getJediCompleteDN : " + jediObject.getJediCompleteDN());
+				System.out.println("getJediPartialDNWihoutRac : " + jediObject.getJediPartialDNWihoutRac());
+				System.out.println("getJediCompleteNode : " + jediObject.getJediCompleteNode());
+				System.out.println("getJediPartialNodeWihoutRac : " + jediObject.getJediPartialNodeWihoutRac());
+
+				System.out.println("getJediRDN : " + jediObject.getJediRDN());
 			}
 		}
-	}
-
-	@Ignore
-	@Test
-	public void path() throws JediException, JediConnectionException {
-		assertNotNull(server);
-
-		JediFilter jediFilter = new JediFilter();
-		jediFilter.setAlias(ldap_connectionName);
-		jediFilter.setPath("");
-		jediFilter.setAttributesList(new ArrayList<String>());
-		jediFilter.setFilter("(&(objectClass=user)(sAMAccountName=humeau_x))");
-		jediFilter.setSubtree(true);
-
-		List<JediObject> list = server.findByFilter(jediFilter);
-		
-		if (list != null && list.isEmpty() == false) {
-			if (list.size() == 1) {
-				JediObject jediObject = list.get(0);
-				
-				JediPath jediPath = jediObject.getJediPartialDNWihoutRac();
-
-				jediPath.get(0);
-				jediPath.getDN();
-				jediPath.getNode();
-				jediPath.getRDN();
-				jediPath.getPathSize();
-			}
-		}
-	}
-
-	@Test(expected=JediException.class) @Ignore
-	public void sampleJUnit() throws JediException, JediConnectionException {
-		throw new JediException("");
-		//fail("toto");
 	}
 
 }
