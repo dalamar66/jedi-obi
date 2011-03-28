@@ -12,8 +12,8 @@ import com.ldap.obi.ObiServiceException;
 /**
  * File : ObiOrganizationalUnitService.java 
  * Component : Version : 1.0 
- * Creation date : 2010-03-28 
- * Modification date : 2010-03-28
+ * Creation date : 2011-03-28 
+ * Modification date : 2011-03-28
  */
 
 public class ObiOrganizationalUnitService extends ObiService<ObiOrganizationalUnitData> {

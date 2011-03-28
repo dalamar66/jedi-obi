@@ -8,8 +8,8 @@ import com.ldap.obi.ObiDataException;
 /**
  * File : ObiOrganizationalUnitData.java 
  * Component : Version : 1.0 
- * Creation date : 2010-03-28 
- * Modification date : 2010-03-28
+ * Creation date : 2011-03-28 
+ * Modification date : 2011-03-28
  */
 
 public class ObiOrganizationalUnitData extends ObiData {
