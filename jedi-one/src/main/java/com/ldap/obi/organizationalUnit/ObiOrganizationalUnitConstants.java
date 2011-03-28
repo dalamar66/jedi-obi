@@ -13,7 +13,6 @@ public interface ObiOrganizationalUnitConstants extends ObiConstants{
 	static final String CATEGORY_ORGANIZATIONAL_UNIT = "Organizational-Unit";
 
 	static final String CLASS_NAME_ORGANIZATIONAL_UNIT = "organizationalUnit";
-	static final String CLASS_NAME_TOP = "top";
 
 	static final String ATTRIBUTE_NAME = "name";
 	static final String ATTRIBUTE_OU = "ou";
