@@ -116,7 +116,7 @@ public class DsmlAdapter {
             	Element elementDirectoryEntryDn = document.createElement("entry");
                 elementDirectoryEntryDn.setAttribute("dn", (String)listResult.get("distinguishedName").get());
                 elementDirectoryEntries.appendChild(elementDirectoryEntryDn);
-                
+
                 JediLog.log(JediLog.LOG_FUNCTIONAL, JediLog.INFO, "Ajout de l'entrée : ", (String)listResult.get("distinguishedName").get(), null);
 
                 JediLog.log(JediLog.LOG_TECHNICAL, JediLog.INFO, "", "", null);
@@ -128,7 +128,6 @@ public class DsmlAdapter {
                 Element elementDirectoryEntryObjectClass = document.createElement("objectClass");
                 elementDirectoryEntryDn.appendChild(elementDirectoryEntryObjectClass);
 
-                
                 @SuppressWarnings("rawtypes")
 				NamingEnumeration ne = listResult.get("objectClass").getAll();
 

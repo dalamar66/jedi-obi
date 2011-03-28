@@ -28,6 +28,7 @@ public class Sample extends Assert {
 
 	@Before
 	public void setup() throws ObiOneException, ObiSchemaAccessException, ObiConnectionException, ObiNamingException {
+		// Ouverture de la connection
 		one = new ObiOne(ldap_domain, ldap_racine, ldap_user, ldap_pwd, null, null, null);
 	}
 
@@ -35,6 +36,7 @@ public class Sample extends Assert {
 	public void cleanup() throws ObiOneException {
 		assertNotNull(one);
 
+		// Fermeture de la connection
 		one.closeConnections();
 	}
 
@@ -60,7 +62,7 @@ public class Sample extends Assert {
 		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
 
-		//Recherche du compte de humeau_x
+		// Recherche du compte de humeau_x
 		List<ObiUserData> list = userService.findByFilter("sAMAccountName", "humeau_x");
 
 		assertEquals(list.size(), 1);
@@ -73,7 +75,7 @@ public class Sample extends Assert {
 		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
 
-		//Test des parametres d'authentification
+		// Test des parametres d'authentification
 		boolean test = userService.checkAuthentification("humeau_x", "Village");
 
 		assertEquals(test, true);
@@ -81,9 +83,13 @@ public class Sample extends Assert {
 	
 	@Ignore
 	@Test
-	public void test() throws JediException, ObiServiceException, ObiConnectionException, ObiDataException {
+	public void searchUsers() throws JediException, ObiServiceException, ObiConnectionException, ObiDataException {
+		assertNotNull(one);
+
+		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
 		
+		// Liste des attributs que l'on veut recuperer
 		List<String> attrList = new ArrayList<String>();
 	    attrList.add("givenName");
 	    attrList.add("sn");
@@ -91,13 +97,15 @@ public class Sample extends Assert {
 	    attrList.add("sAMAccountName");
 	    attrList.add("distinguishedName");
 
+	    // Creation du filtre
 		JediFilter filtre = new JediFilter();
-		filtre.setAlias(one.getDirectoryAlias());
-		filtre.setPath("");
-		filtre.setSubtree(true);
-		filtre.setPageSize(900);
-		filtre.setAttributesList(attrList);
+		filtre.setAlias(one.getDirectoryAlias());//Definition de la connection
+		filtre.setPath("");//Definition du chemin à ajouter au ldap_racine a partir duquel sera fait la recherche
+		filtre.setSubtree(true);//La recherche doit se faire dans tous les descendants
+		filtre.setPageSize(900);//Definition de la pagination de la recherche
+		filtre.setAttributesList(attrList);//Affectation de la liste des attributs a rappatriés
 
+		// Application du filtre qui sera fait automatiquement sur les user
 		List<ObiUserData> obiUserDataList = userService.findObiDataByFilter(filtre);
 		
 		for (ObiUserData obiUserData : obiUserDataList) {
