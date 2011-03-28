@@ -2,7 +2,8 @@
 
 ===*Obi Part*===
 
- * ~~Implémenter les services organizationalUnit~~
+ * ~~Implémenter le service organizationalUnit~~
+ * ~~Implémenter le service computer~~
  * ~~Commentaires sur le sample Obi~~
  * Refactoring ~~du nom des méthodes~~ et de l'architecture
 
