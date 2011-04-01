@@ -1,13 +1,12 @@
-#summary One-sentence summary of this page.
+=2.2.0 release=
 
-= Introduction =
+===*Jedi Part*===
 
-Add your content here.
+ * Commentaires sur le sample Jedi
 
+===*Obi Part*===
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * Implémentation du service organizationalUnit
+ * Implémentation du service computer
+ * Commentaires sur le sample Obi
+ * Refactoring du nom des méthodes et de l'architecture
