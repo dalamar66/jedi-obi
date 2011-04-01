@@ -58,7 +58,7 @@ public class Sample extends Assert {
 	@Test
 	public void findUserData() throws ObiServiceException, ObiConnectionException, ObiInvalidDnException, ObiOneException {
 		assertNotNull(one);
-		
+
 		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
 
@@ -88,7 +88,7 @@ public class Sample extends Assert {
 
 		// Recuperation du service de personne
 		ObiUserService userService = one.getUserService();
-		
+
 		// Liste des attributs que l'on veut recuperer
 		List<String> attrList = new ArrayList<String>();
 	    attrList.add("givenName");
@@ -107,16 +107,16 @@ public class Sample extends Assert {
 
 		// Application du filtre qui sera fait automatiquement sur les user
 		List<ObiUserData> obiUserDataList = userService.findObiDataByFilter(filtre);
-		
+
 		for (ObiUserData obiUserData : obiUserDataList) {
 			System.out.println(obiUserData.getValue("givenName"));
 	    	System.out.println(obiUserData.getValue("sn"));
 	    	System.out.println(obiUserData.getValue("displayName"));
 	    	System.out.println(obiUserData.getValue("sAMAccountName"));
 	    	System.out.println(obiUserData.getValue("distinguishedName"));
-	
+
 	    	System.out.println("***********************************");
 		}
 	}
-	
+
 }
