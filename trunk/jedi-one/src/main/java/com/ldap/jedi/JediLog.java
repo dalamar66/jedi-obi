@@ -71,8 +71,8 @@ public class JediLog {
 	/**
 	 * Méthode de log.
 	 * 
-	 * @param type
-	 * @param level
+	 * @param categorie
+	 * @param priorite
 	 * @param message
 	 * @param origin
 	 */

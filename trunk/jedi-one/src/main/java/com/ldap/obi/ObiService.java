@@ -29,7 +29,7 @@ public abstract class ObiService<T extends ObiData> {
 	/**
 	 * Constructeur prenant en paramètre un ObiOne.
 	 * 
-	 * @param One
+	 * @param one
 	 *            lien vers l'annuaire.
 	 * @throws OBIServiceException
 	 *             Si le paramètre OBIOne est null.
@@ -155,7 +155,7 @@ public abstract class ObiService<T extends ObiData> {
 	 * Mise à jour dans l'annuaire d'une liste d'attributs à partir d'un DN. Connexion au domaine. Cette méthode sera utilisée par toutes les méthodes du type
 	 * setXXXXXData. Attention la modification de RDN est impossible et doit passer pa un renommage.
 	 * 
-	 * @param DN
+	 * @param dnWithRac
 	 *            distinguishedName de l'objet à mettre à jour.
 	 * @param myData
 	 *            liste d'attributs à mettre à jour.

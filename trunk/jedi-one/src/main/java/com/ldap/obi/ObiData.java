@@ -101,7 +101,7 @@ public abstract class ObiData {
 	/**
 	 * Formate les attributs de la dataList pour la consultation ou le stockage.
 	 * 
-	 * @param toConsultOrStore
+	 * @param store
 	 *            Type de formatage (pour consultation ou pour stockage).
 	 */
 	public void formatDataList(boolean store) {

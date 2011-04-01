@@ -504,8 +504,8 @@ public class JediServer implements JediContextProvider {
 	 * 
 	 * @param alias
 	 *            Alias de la connexion.
-	 * @param dn
-	 *            Le dn de l'objet à renommer.
+	 * @param jediObject
+	 *            Objet à renommer.
 	 * @param nrdn
 	 *            Le nouveau rdn de l'objet à renommer.
 	 * @throws JediException
@@ -535,7 +535,7 @@ public class JediServer implements JediContextProvider {
 	 *            Alias de la connexion.
 	 * @param dn
 	 *            Le dn de l'objet à renommer.
-	 * @param nrdn
+	 * @param rdn
 	 *            Le nouveau rdn de l'objet à renommer.
 	 * @throws JediException
 	 *             Si l'alias est null ou vide, ou si le dn est null ou vide , ou si le rdn est null ou vide.
@@ -705,7 +705,7 @@ public class JediServer implements JediContextProvider {
 	 * Methode permettant d'effectuer tout type de recherche. JediFilter est controlé par la methode checkJediFilter.
 	 * 
 	 * @param jediFilter
-	 * @return
+	 * @return List<JediObject>
 	 * @throws JediException
 	 * @throws JediConnectionException
 	 */
@@ -1109,9 +1109,8 @@ public class JediServer implements JediContextProvider {
 	 * 
 	 * @param alias
 	 *            Alias de la connexion.
-	 * @param dn
-	 *            Le dn de l'objet dont on veut récupérer tous les fils.
-	 * @return Vecteur de fils de l'objet spécifié.
+	 * @param jediObject
+	 *            Objet dont on veut récupérer tous les fils.
 	 * @throws JediException
 	 *             Si l'alias est null ou vide, ou si le jediObject est null.
 	 */
@@ -1401,7 +1400,7 @@ public class JediServer implements JediContextProvider {
 	 * @param alias
 	 * @param attributeList
 	 * @param dn
-	 * @return
+	 * @return JediObject
 	 * @throws JediException
 	 * @throws JediConnectionException
 	 */
@@ -1517,7 +1516,7 @@ public class JediServer implements JediContextProvider {
 	 * 
 	 * @param nameAttribute
 	 *            Nom de l'attribut.
-	 * @param vect
+	 * @param list
 	 *            Valeurs de l'attribut qui seront castées en String.
 	 * @return Instance de JediAttribute créée
 	 * @throws JediException

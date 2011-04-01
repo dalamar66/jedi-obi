@@ -157,7 +157,7 @@ public class JediAttributeList {
 	/**
 	 * Méthode qui permet de supprimer un attribut à la liste des attributs.
 	 * 
-	 * @param attr
+	 * @param attrID
 	 *            L'attribut que l'on veut supprimer.
 	 * @return L'attribut que l'on a supprimé.
 	 */

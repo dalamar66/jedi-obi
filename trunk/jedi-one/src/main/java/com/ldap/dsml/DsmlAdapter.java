@@ -331,7 +331,7 @@ public class DsmlAdapter {
     /**
      * Méthode qui met à jour la base à partir du Document.
      *
-     * @param doc Document à "intégrer" dans la base.
+     * @param document Document à "intégrer" dans la base.
      * @param server Serveur sur lequel on va se connecter.
      * @param alias Alias de la connexion.
      * @throws DsmlAdapterException

@@ -111,13 +111,13 @@ public class JediUtil {
 	/**
 	 * Méthode qui spécifie si on veut ou non débuger.
 	 * 
-	 * @param trace
+	 * @param debug
 	 *            Spécifie si on debug.
 	 */
-	public static void setDebug(boolean deb) {
-		CST_PRINT_DEBUG = deb;
+	public static void setDebug(boolean debug) {
+		CST_PRINT_DEBUG = debug;
 
-		if (deb == true) {
+		if (debug == true) {
 			JediUtil.setWithTrace(true);
 		}
 	}
@@ -184,9 +184,8 @@ public class JediUtil {
 	}
 
 	/**
-	 * 
 	 * @param fichierProperties
-	 * @return
+	 * @return Properties
 	 * @throws Exception
 	 */
 	public static Properties getPropsFromFile(String fichierProperties) throws Exception {
