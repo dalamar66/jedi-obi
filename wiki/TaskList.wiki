@@ -1,16 +1,3 @@
-=2.2.0 release=
-
-===*Obi Part*===
-
- * ~~Implémenter le service organizationalUnit~~
- * ~~Implémenter le service computer~~
- * ~~Commentaires sur le sample Obi~~
- * ~~Refactoring du nom des méthodes et de l'architecture~~
-
-===*Jedi Part*===
-
- * ~~Commentaires sur le sample Jedi~~
-
 =2.3.0 release=
 
 ===*Obi Part*===
