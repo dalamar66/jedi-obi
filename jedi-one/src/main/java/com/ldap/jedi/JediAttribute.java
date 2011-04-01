@@ -164,11 +164,8 @@ public class JediAttribute extends BasicAttribute {
 	 * valeurs. Si toutes les valeurs sont null ou vide alors la valeur de l'attribut n'est pas initialisée.
 	 * 
 	 * @param nameAttribute
-	 *            Nom de l'attribut.
-	 * @param vect
-	 *            Valeurs de l'attribut qui seront castées en String.
+	 * @param list
 	 * @throws JediException
-	 *             Les paramètres d'initialisation sont incorrects. Si nameAttribute est null ou vide.
 	 */
 	public JediAttribute(String nameAttribute, List<String> list) throws JediException {
 		super(nameAttribute);

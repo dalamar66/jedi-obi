@@ -58,7 +58,7 @@ public class ObiUserService extends ObiService<ObiUserData> {
 	 * 
 	 * @param login
 	 * @param password
-	 * @return
+	 * @return JediServer
 	 * @throws ObiServiceException
 	 * @throws ObiConnectionException
 	 */
@@ -103,7 +103,7 @@ public class ObiUserService extends ObiService<ObiUserData> {
 	 * 
 	 * @param login
 	 * @param password
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkAuthentification(String login, String password) {
 		try {
