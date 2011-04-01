@@ -79,7 +79,7 @@ public class Sample extends Assert {
 		jediFilter.setIndice(80);//Indice de rapprochement
 		jediFilter.setAttribute("sAMAccountName");//Attribut a approximer
 		jediFilter.setMetric(JediFilterConstants.METRIC_JARO);//Methode d'approximation
-		
+
 		jediFilter.setPageSize(900);//Definition de la pagination de la recherche
 		jediFilter.setLimitation(100);//Limitation des resultats au 100 premiers
 		jediFilter.setSorted(new JediObjectComparator(JediObjectComparator.DN));//Definition du critere de tri
