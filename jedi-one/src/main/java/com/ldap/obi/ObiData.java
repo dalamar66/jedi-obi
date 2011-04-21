@@ -17,7 +17,7 @@ import com.ldap.jedi.JediObject;
  * File : ObiData.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-09 
- * Modification date : 2010-03-09
+ * Modification date : 2011-04-21
  */
 
 public abstract class ObiData {
@@ -39,7 +39,7 @@ public abstract class ObiData {
 	 * 
 	 * @param jediObject
 	 *            JediObject déjà chargé.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si le JediObject est null ou non valide.
 	 */
 	public ObiData(JediObject jediObject) throws ObiDataException {
@@ -59,7 +59,7 @@ public abstract class ObiData {
 	 * 
 	 * @param jediAttributeList
 	 *            JediAttributeList déjà chargé.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si le JediAttributeList est null ou non valide.
 	 */
 	public ObiData(JediAttributeList jediAttributeList) throws ObiDataException {
@@ -74,6 +74,27 @@ public abstract class ObiData {
 		dataList = jediAttributeList;
 	}
 
+	/**
+	 * Constructeur à partir d'un JediAttribute. L'attribut distinguishedName sera systématiquement chargé.
+	 * 
+	 * @param jediAttribute JediAttribute déjà chargé.
+	 * @throws ObiDataException Si le JediAttribute est null ou non valide.
+	 */
+	public ObiData(JediAttribute jediAttribute) throws ObiDataException {
+		// Verification de la validite des parametres de la methode
+		if (jediAttribute == null) {
+			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "obi_msg_parameter_error", "", this);
+
+			throw new ObiDataException("OBIData : OBIData(JediAttribute) : Paramètres incorrects");
+		}
+
+		// Affectation de la JediAttributeList à la DataList
+        JediAttributeList jediAttributeList = new JediAttributeList();
+        jediAttributeList.put(jediAttribute);
+
+		dataList = jediAttributeList;
+	}
+	
 	/**
 	 * Méthode qui retourne la liste d'attributs de l'OBIData.
 	 * 
@@ -129,7 +150,7 @@ public abstract class ObiData {
 	 * @param value
 	 *            Valeur cherchée.
 	 * @return true si la valeur est présente, false sinon.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si les paramètres sont nulls ou vides.
 	 */
 	public boolean containsValue(String attributeName, String value) throws ObiDataException {
@@ -158,7 +179,7 @@ public abstract class ObiData {
 	 * @param attributeName
 	 *            Nom de l'attribut.
 	 * @return true si l'attribut est présent, false sinon.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si attributeName est null ou vide.
 	 */
 	public boolean containsAttribute(String attributeName) throws ObiDataException {
@@ -177,7 +198,7 @@ public abstract class ObiData {
 	 * Retourne la liste des noms d'attributs présents dans le dataList.
 	 * 
 	 * @return Un vecteur de String.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si la liste des attributs contient un autre type que des String.
 	 */
 	public List<String> getAllAttributes() throws ObiDataException {
@@ -206,7 +227,7 @@ public abstract class ObiData {
 	 * @param attributeName
 	 *            Nom de l'attribut.
 	 * @return Le nombre de valeurs de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si attributeName est null ou vide, ou s'il n'est pas valide.
 	 */
 	public int countValues(String attributeName) throws ObiDataException {
@@ -246,7 +267,7 @@ public abstract class ObiData {
 	 * 
 	 * @param attributeName
 	 *            Nom de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si le paramètre est null ou vide.
 	 */
 	public void clearValue(String attributeName) throws ObiDataException {
@@ -266,7 +287,7 @@ public abstract class ObiData {
 	 * 
 	 * @param attributeName
 	 *            Nom de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si le paramètre est null ou vide.
 	 */
 	public void removeAttribute(String attributeName) throws ObiDataException {
@@ -288,7 +309,7 @@ public abstract class ObiData {
 	 *            Nom de l'attribut.
 	 * @param position
 	 *            Position de la valeur à retirer.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si attributeName est null ou vide, ou s'il n'est pas valide, ou si l'index est trop grand.
 	 */
 	public void removeValue(String attributeName, int position) throws ObiDataException {
@@ -326,7 +347,7 @@ public abstract class ObiData {
 	 *            Nom de l'attribut.
 	 * @param value
 	 *            Valeur à retirer.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si les paramètres sont nulls ou vides, ou si l'attribut n'est pas valide.
 	 */
 	public void removeValue(String attributeName, String value) throws ObiDataException {
@@ -373,7 +394,7 @@ public abstract class ObiData {
 	 *            Nom de l'attribut.
 	 * @param value
 	 *            Valeur à ajouter à l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si les paramètres ont nulls ou vides, ou lors de la création de l'attribut.
 	 */
 	public void addValue(String attributeName, String value) throws ObiDataException {
@@ -417,7 +438,7 @@ public abstract class ObiData {
 	 *            Nom de l'attribut.
 	 * @param values
 	 *            Valeurs de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si les paramètres sont nulls ou vides, ou en cas de problème de création de l'attribut.
 	 */
 	public void setValues(String attributeName, List<String> values) throws ObiDataException {
@@ -466,7 +487,7 @@ public abstract class ObiData {
 	 *            Nom de l'attribut.
 	 * @param value
 	 *            Valeur de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si les paramètres sont nulls ou vides, ou en cas de problème de création de l'attribut.
 	 */
 	public void setValue(String attributeName, String value) throws ObiDataException {
@@ -490,7 +511,7 @@ public abstract class ObiData {
 	 * @param position
 	 *            Position de la valeur à récupérer.
 	 * @return La valeur demandée.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si attributeName est null ou vide, ou s'il n'est pas valide, ou si l'index est trop grand.
 	 */
 	public String getValue(String attributeName, int position) throws ObiDataException {
@@ -532,7 +553,7 @@ public abstract class ObiData {
 	 * @param attributeName
 	 *            Nom de l'attribut.
 	 * @return Vecteur de String contenant la liste des valeurs de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si attributeName est null ou vide, ou s'il n'est pas valide.
 	 */
 	public List<String> getValues(String attributeName) throws ObiDataException {
@@ -572,7 +593,7 @@ public abstract class ObiData {
 	 * @param attributeName
 	 *            Nom de l'attribut.
 	 * @return Valeur de l'attribut.
-	 * @throws OBIDataException
+	 * @throws ObiDataException
 	 *             Si le paramètre est null ou vide, ou si le nom du paramètre n'est pas valide.
 	 */
 	public String getValue(String attributeName) throws ObiDataException {

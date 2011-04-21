@@ -4,7 +4,7 @@ package com.ldap.jedi;
  * File : JediObject.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-04 
- * Modification date : 2010-03-04
+ * Modification date : 2011-04-21
  */
 
 import java.util.ArrayList;
@@ -93,6 +93,26 @@ public class JediObject {
 		this.pathDN = path.getDN();
 		this.pathRDN = path.getRDN();
 		this.pathNode = path.getNode();
+	}
+
+	/**
+	 * Constructeur de JediObject à partir de son chemin. Le chemin passé en paramètre est le chemin de la feuille vers la racine, la feuille étant le nom de
+	 * l'objet à créer, la racine ne comprenant pas le chemin racine de la connexion.
+	 * 
+	 * @param alias
+	 * @param jediContextProvider
+	 * @param path
+	 * @throws JediException
+	 */
+	public JediObject(String alias, JediContextProvider jediContextProvider, String path) throws JediException {
+		// Verification de la validite des parametres de la methode
+		if (path == null) {
+			JediLog.log(JediLog.LOG_TECHNICAL, JediLog.ERROR, "jedi_msg_parameter_error", "", this);
+
+			throw new JediException("JediObject : JediObject(String, JediContextProvider, JediPath) : le path est null");
+		}
+		
+		new JediObject(alias, jediContextProvider, new JediPath(path));
 	}
 
 	/**
