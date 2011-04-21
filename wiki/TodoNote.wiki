@@ -2,4 +2,11 @@
 
 ===*Obi Part*===
 
- * Implémentation du services groupes
+ * Implémentation du service groupe
+ * Implémentation du service groupe d'utilisateur
+
+=2.4.0 release=
+
+===*Obi Part*===
+
+ * Gestion des groupes de plus de 1000 objets
