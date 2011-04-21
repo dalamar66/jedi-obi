@@ -1,6 +1,6 @@
 =2.2.0 release=
 
-_Pas de rétrocompatibilité avec la 2.1.0_
+_Pas de rétrocompatibilité avec la 2.1.0 (Renommage des méthodes des services obi)_
 
 ===*Jedi Part*===
 
