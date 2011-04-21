@@ -1,10 +1,3 @@
-=2.3.0 release=
-
-===*Obi Part*===
-
- * Implémentation du service groupe
- * Implémentation du service groupe d'utilisateur
-
 =2.4.0 release=
 
 ===*Obi Part*===
