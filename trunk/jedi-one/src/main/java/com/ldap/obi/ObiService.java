@@ -15,7 +15,7 @@ import com.ldap.jedi.JediPath;
  * File : ObiService.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-10 
- * Modification date : 2011-03-28
+ * Modification date : 2011-04-21
  */
 
 public abstract class ObiService<T extends ObiData> {
@@ -200,6 +200,20 @@ public abstract class ObiService<T extends ObiData> {
 			throw new ObiServiceException("OBIService : setData(String, OBIData) : Erreur sur le rappatriement de l'objet");
 		}
 
+		setData(jediObject, myData);
+	}
+
+	/**
+	 * Mise à jour dans l'annuaire d'une liste d'attributs à partir d'un DN. Connexion au domaine. Cette méthode sera utilisée par toutes les méthodes du type
+	 * setXXXXXData. Attention la modification de RDN est impossible et doit passer pa un renommage.
+	 * 
+	 * @param jediObject
+	 * @param myData
+	 * @throws ObiInvalidDnException
+	 * @throws ObiServiceException
+	 * @throws ObiConnectionException
+	 */
+	public void setData(JediObject jediObject, ObiData myData) throws ObiInvalidDnException, ObiServiceException, ObiConnectionException {
 		// Si la liste apres controle de modification est valide
 		if (myData.controlDataList(false) == true) {
 			// On formate la liste pour le stockage en base
@@ -384,6 +398,16 @@ public abstract class ObiService<T extends ObiData> {
 		}
 	}// Fin de la méthode
 
+	protected JediObject getJediObject(String dn) throws ObiServiceException {
+		try {
+	        // Creation de l'objet correspondant au dn
+	        JediPath jediPath = new JediPath(dn);
+	        return new JediObject(one.getDirectoryAlias(), one.getServer(), jediPath.getDNWithoutRacine(one.getDomainRoot()));
+		} catch (Exception e) {
+			throw new ObiServiceException("OBIService : getJediObject(String) : Erreur");
+		}
+	}
+	
 	/**
 	 * Methode permettant de construire le filtre
 	 * 

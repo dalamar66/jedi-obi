@@ -20,6 +20,8 @@ import com.ldap.jedi.JediObject;
 import com.ldap.jedi.JediPath;
 import com.ldap.jedi.JediServer;
 import com.ldap.obi.computer.ObiComputerService;
+import com.ldap.obi.group.ObiGroupService;
+import com.ldap.obi.group.ObiGroupUserService;
 import com.ldap.obi.organizationalUnit.ObiOrganizationalUnitService;
 import com.ldap.obi.personne.ObiPersonneService;
 import com.ldap.obi.user.ObiUserService;
@@ -28,7 +30,7 @@ import com.ldap.obi.user.ObiUserService;
  * File : ObiOne.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-09 
- * Modification date : 2011-03-28
+ * Modification date : 2011-04-21
  */
 
 public class ObiOne {
@@ -385,4 +387,13 @@ public class ObiOne {
 	public ObiComputerService getComputerService() throws ObiServiceException {
 		return new ObiComputerService(this);
 	}
+
+	public ObiGroupService getGroupService() throws ObiServiceException {
+		return new ObiGroupService(this);
+	}
+
+	public ObiGroupUserService getGroupUserService() throws ObiServiceException {
+		return new ObiGroupUserService(this);
+	}
+
 }

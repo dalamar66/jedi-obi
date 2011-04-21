@@ -4,7 +4,7 @@ package com.ldap.jedi;
  * File : JediPath.java 
  * Component : Version : 1.0 
  * Creation date : 2010-03-04 
- * Modification date : 2010-03-09
+ * Modification date : 2011-04-21
  */
 
 import java.util.LinkedList;
@@ -153,6 +153,27 @@ public class JediPath {
 		return result.toString();
 	}
 
+	/**
+	 * Methode permettant de recuperer le dn sans la racine
+	 * 
+	 * @param domainRoot
+	 * @return
+	 * @throws JediException
+	 */
+	public String getDNWithoutRacine(String domainRoot) throws JediException {
+		String dn = getDN();
+
+		// Formattage des String
+		String dnFormat = dn.toLowerCase().trim();
+		String domainRootFormat = domainRoot.toLowerCase().trim();
+
+		if (dnFormat.endsWith(domainRootFormat)) {
+			dnFormat = dnFormat.substring(0, dnFormat.indexOf(domainRootFormat)-1);
+		}
+
+		return dnFormat;
+	}
+	
 	/**
 	 * Méthode qui permet de récupérer le RDN.
 	 * 

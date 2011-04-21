@@ -6,7 +6,7 @@ import com.ldap.obi.ObiConstants;
  * File : ObiUserConstants.java 
  * Component : Version : 1.0 
  * Creation date : 2011-03-10 
- * Modification date : 2011-03-28
+ * Modification date : 2011-04-21
  */
 public interface ObiUserConstants extends ObiConstants{
 
@@ -18,5 +18,6 @@ public interface ObiUserConstants extends ObiConstants{
 
 	static final String ATTRIBUTE_DISPLAY_NAME = "displayName";
 	static final String ATTRIBUTE_SAMACCOUNT_NAME = "sAMAccountName";
+	static final String ATTRIBUTE_MEMBEROF = "memberOf";
 
 }
