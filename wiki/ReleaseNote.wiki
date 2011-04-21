@@ -1,5 +1,7 @@
 =2.2.0 release=
 
+Pas de rétrocompatibilité avec la 2.1.0
+
 ===*Jedi Part*===
 
  * Commentaires sur le sample Jedi
