@@ -1,6 +1,6 @@
 =2.2.0 release=
 
-Pas de rétrocompatibilité avec la 2.1.0
+_Pas de rétrocompatibilité avec la 2.1.0_
 
 ===*Jedi Part*===
 
