@@ -10,3 +10,4 @@
 ===*Obi Part*===
 
  * Gestion des groupes de plus de 1000 objets
+ * Ajout des methodes d'administration de masse pour les groupes
