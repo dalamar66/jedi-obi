@@ -10,4 +10,4 @@ A javadoc is available with the sources of the project and JUnit tests for examp
 
 The release 2.3.0 is available!
 
-The project already contains TodoNote future developments. Stay informed.
+The TodoNote file already contains future developments. Stay informed.
