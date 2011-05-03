@@ -1,13 +1,13 @@
-#summary One-sentence summary of this page.
+The package-OBI JEDI (Java Enhanced Directory Interface / Object Intelligence) was developed to facilitate the use of the standard library (JNDI javax Naming Directory Interface) allowing, among other access to databases LDAP / Active Directory. JEDI provides additional features like a pool of connections, management of lists of attributes, search by approximation (with choice of the method). OBI (Object Intelligence) has still allows him to work with the concept of business object.
 
-= Introduction =
+This library is designed for both advanced users and beginners due to its ease of use and implementation.
 
-Add your content here.
+A javadoc is available with the sources of the project and JUnit tests for examples of use.
 
+     * Jedi allows all operations on all types of objects.
+     * Obi implements the services of persons, users, computers, and the Organizational-unit group (... the moment).
+     * DSML allows the export, import and differential on all types.
 
-= Details =
+The release 2.3.0 is available!
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+The file already contains TodoNote future developments. Stay informed.
