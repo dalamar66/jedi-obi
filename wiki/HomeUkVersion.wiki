@@ -1,4 +1,4 @@
-The JEDI-OBI package (Java Enhanced Directory Interface / Object Intelligence) is designed to facilitate the use of the standard library JNDI(JNDI javax Naming Directory Interface) which allows access to the LDAP/Active Directory. JEDI includes several complementary functions,  including a pool of connections, attributes list management, search by approximation (with a choice of method). OBI (Object Intelligence) makes it possible to work with business objects. 
+The JEDI-OBI package (Java Enhanced Directory Interface / Object Intelligence) is designed to facilitate the use of the standard library JNDI(javax Naming Directory Interface) which allows access to the LDAP/Active Directory. JEDI includes several complementary functions,  including a pool of connections, attributes list management, search by approximation (with a choice of method). OBI (Object Intelligence) makes it possible to work with business objects. 
 
 This library is very user-friendly and is suitable for beginners and experienced users. 
 
